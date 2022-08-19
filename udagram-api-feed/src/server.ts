@@ -1,6 +1,6 @@
 import cors from 'cors';
 import express from 'express';
-// import {sequelize} from '../sequelize';
+import {sequelize} from '../sequelize';
 
 import {IndexRouter} from './controllers/v0/index.router';
 
@@ -10,10 +10,10 @@ import {V0_FEED_MODELS, } from './controllers/v0/model.index';
 
 
 (async () => {
-  // await sequelize.addModels(V0_FEED_MODELS);
+  await sequelize.addModels(V0_FEED_MODELS);
 
   console.debug("Initialize database connection...");
-  // await sequelize.sync();
+  await sequelize.sync();
 
   const app = express();
   const port = process.env.PORT || 8080;
