@@ -61,7 +61,6 @@ router.post('/',
     requireAuth,
     async (req: Request, res: Response) => {
       console.log("Creating new feed item");
-      console.debug("D- Creating new feed item");
       const caption = req.body.caption;
       const fileName = req.body.url; // same as S3 key name
 
@@ -81,7 +80,6 @@ router.post('/',
       const savedItem = await item.save();
 
       savedItem.url = AWS.getGetSignedUrl(savedItem.url);
-      console.log("savedItem.url", savedItem.url)
       res.status(201).send(savedItem);
     });
 
