@@ -1,10 +1,9 @@
 import AWS = require('aws-sdk');
 import {config} from './src/config/config';
 
-
 // Configure AWS
-const credentials = new AWS.SharedIniFileCredentials({profile: config.aws_profile});
-AWS.config.credentials = credentials;
+const credentialsFromEnv = new AWS.Credentials({accessKeyId: config.aws_key, secretAccessKey: config.aws_secret})
+AWS.config.credentials = credentialsFromEnv;
 
 export const s3 = new AWS.S3({
   signatureVersion: 'v4',
@@ -15,7 +14,6 @@ export const s3 = new AWS.S3({
 // Generates an AWS signed URL for retrieving objects
 export function getGetSignedUrl( key: string ): string {
   const signedUrlExpireSeconds = 60 * 5;
-
   return s3.getSignedUrl('getObject', {
     Bucket: config.aws_media_bucket,
     Key: key,

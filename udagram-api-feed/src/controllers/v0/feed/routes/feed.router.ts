@@ -40,6 +40,7 @@ router.get('/', async (req: Request, res: Response) => {
 // Get a feed resource
 router.get('/:id',
     async (req: Request, res: Response) => {
+      console.log("get resource by id ");
       const {id} = req.params;
       const item = await FeedItem.findByPk(id);
       res.send(item);
@@ -49,6 +50,7 @@ router.get('/:id',
 router.get('/signed-url/:fileName',
     requireAuth,
     async (req: Request, res: Response) => {
+      console.log('Retrieving signed url')
       const {fileName} = req.params;
       const url = AWS.getPutSignedUrl(fileName);
       res.status(201).send({url: url});
@@ -58,6 +60,8 @@ router.get('/signed-url/:fileName',
 router.post('/',
     requireAuth,
     async (req: Request, res: Response) => {
+      console.log("Creating new feed item");
+      console.debug("D- Creating new feed item");
       const caption = req.body.caption;
       const fileName = req.body.url; // same as S3 key name
 
