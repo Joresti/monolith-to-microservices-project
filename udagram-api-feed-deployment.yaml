@@ -17,6 +17,13 @@ spec:
       containers:
       - image: emotionalprogrammer/udagram-api-feed:latest
         name: backend-feed
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "2024Mi"
+            cpu: "1000m"    
         envFrom:
           - configMapRef:
               name: env-config
